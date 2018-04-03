@@ -9,6 +9,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const opn = require('opn')
+const currentIP = require('ip').address()
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -78,13 +80,12 @@ module.exports = new Promise((resolve, reject) => {
       process.env.PORT = port
       // add port to devServer config
       devWebpackConfig.devServer.port = port
-      window.open(`http://${devWebpackConfig.devServer.host}:${port}`)
+      // opn(`http://${devWebpackConfig.devServer.host}:${port}`)
+      opn(`http://${currentIP}:${port}`)
+      console.log(`http://${currentIP}:${port}`)
 
       // Add FriendlyErrorsPlugin
       devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
-        compilationSuccessInfo: {
-          messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
-        },
         onErrors: config.dev.notifyOnErrors
         ? utils.createNotifierCallback()
         : undefined
