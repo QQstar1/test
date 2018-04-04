@@ -3,4 +3,4 @@
 > vue project
 
 $ npm i 安装npm包
-$ npm start 启动项目
+$ npm run dev 启动项目
